@@ -1,6 +1,6 @@
 const mongoose = require('mongoose');
 
-const groupNames = mongoose.Schema({
+const groupNames = new mongoose.Schema({
   name: {type: String, default:''},
   department: {type: String, default:''},
   image: {type:String,default:'default.png'},
@@ -10,4 +10,4 @@ const groupNames = mongoose.Schema({
   }]
 });
 
-module.exports = mongoose.model('group',groupNames);
+module.exports = mongoose.model('Group',groupNames);
