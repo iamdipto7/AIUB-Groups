@@ -13,10 +13,10 @@ module.exports = function (formidable,Group,aws) {
     },
     adminPostPage: function (req,res) {
       const newGroup = new Group();
-      console.log(req.body);
+      //console.log(req.body);
       newGroup.name = req.body.group;
       newGroup.department = req.body.department;
-      newGroup.image = req.body.upload;
+      newGroup.image = aws.getImageName();
       newGroup.save((err)=>{
         res.render('admin/dashboard');
       });

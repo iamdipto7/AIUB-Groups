@@ -2,6 +2,8 @@ const AWS = require('aws-sdk');
 const multer = require('multer');
 const multerS3 = require('multer-s3');
 
+let imgName;
+
 AWS.config.update({
   accessKeyId: 'AKIAJYZQZWIDBCW776PQ',
   secretAccessKey:'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',
@@ -18,12 +20,18 @@ const upload = multer({
       cb(null,{fieldName: file.fieldname});
     },
     key: function(req,file,cb){
-      cb(null,file.originalname);
+      let ext = file.originalname.split(".");
+      imgName = Date.now().toString()+"."+ext[1];
+
+      req.body.image = imgName;
+      cb(null,imgName);
     },
-  }),
-  rename: function(fieldname,filename){
-    return filename.replace(/\W+/g, '-').toLowerCase();
-  }
+  })
 })
 
+
+
 exports.Upload = upload;
+exports.getImageName = function () {
+  return imgName;
+}
