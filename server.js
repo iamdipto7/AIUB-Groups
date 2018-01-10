@@ -9,12 +9,13 @@ const MongoStore = require('connect-mongo')(session);
 const mongoose = require('mongoose');
 const flash = require('connect-flash');
 const passport = require('passport');
-
+const socketIO = require('socket.io');
+const {Users} = require('./helpers/UsersClass');
 
 const container = require('./container');
 
 
-container.resolve(function(users,_,admin,home){
+container.resolve(function(users,_,admin,home,group){
 
   mongoose.Promise = global.Promise;
   //mongoose.connect('mongodb://localhost/footballkik',{useMongoClient: true});
@@ -25,16 +26,20 @@ container.resolve(function(users,_,admin,home){
   function SetupExpress(){
     const app = express();
     const server = http.createServer(app);
+    const io = socketIO(server);
     server.listen(3000,()=>{
       console.log('Listening to port 3000');
     });
 
     ConfigureExpress(app);
 
+    require('./socket/groupchat.js')(io, Users);
+
     const router = require('express-promise-router')();
     users.SetRouting(router);
     admin.SetRouting(router);
     home.SetRouting(router);
+    group.SetRouting(router);
 
     app.use(router);
   };
