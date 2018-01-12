@@ -1,9 +1,10 @@
 'use strict';
 
-module.exports = function (async, Group, _) {
+module.exports = function (async, Group, _, Users) {
   return {
     SetRouting: function (router) {
       router.get('/home',this.homePage);
+      router.post('home', this.postHomePage);
     },
     homePage: function (req,res) {
 
@@ -21,11 +22,20 @@ module.exports = function (async, Group, _) {
           }],(err, newResult)=>{
             callback(err, newResult);
           });
+        },
+
+        function (callback) {
+          Users.findOne({'username': req.user.username})
+              .populate('request.userId')
+              .exec((err,result) => {
+                callback(err,result);
+              });
         }
       ], (err,results) => {
         const res1 = results[0];
         const res2 = results[1];
-        console.log(res2);
+        const res3 = results[2];
+        //console.log(res2);
 
         const dataChunk = [];
         const chunkSize = 3;
@@ -36,8 +46,15 @@ module.exports = function (async, Group, _) {
 
         const departmentSort = _.sortBy(res2,'_id');
         //console.log(dataChunk);
-        res.render('home',{title:'AIUB Groups | Home', user: req.user, data: dataChunk, department: departmentSort});
+        res.render('home',{title:'AIUB Groups | Home', user: req.user, chunks: dataChunk, department: departmentSort, data: res3});
       })
+    },
+    postHomePage: function (req,res) {
+      async.parallel([
+        function (callback) {
+
+        }
+      ]);
     }
   };
 }

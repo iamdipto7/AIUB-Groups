@@ -5,8 +5,8 @@ const multerS3 = require('multer-s3');
 let imgName;
 
 AWS.config.update({
-  accessKeyId: 'AKIAJYZQZWIDBCW776PQ',
-  secretAccessKey:'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',
+  accessKeyId: 'AKIAJIGT7UL6IA3GH6VA',
+  secretAccessKey:'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',
   region: 'ap-south-1'
 });
 
@@ -23,9 +23,9 @@ const upload = multer({
       let ext = file.originalname.split(".");
       imgName = Date.now().toString()+"."+ext[1];
 
-      req.body.image = imgName;
+      //req.body.image = imgName;
       cb(null,imgName);
-    },
+    }
   })
 })
 

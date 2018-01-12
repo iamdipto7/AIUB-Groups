@@ -40,7 +40,7 @@
                                         <hr/>
                                         <select class="form-control" name="department" id="department" >
                                             <option value="">Filter By Department</option>
-                      											<% _.forEach(department, function(value){%>
+                      											<% _.forEach(department, function(value){ %>
                                             <option value="<%= value._id %>"><%= value._id %></option>
                                             <% }) %>
                                         </select>
@@ -58,11 +58,11 @@
 
             <div class="col-md-9">
                 <div>
-                  <% _.forEach(data, function(val) { %>
+                  <% _.forEach(chunks, function(val) { %>
                     <div class="category-list">
                         <div class="row">
                           <% _.forEach(val, function(val2) { %>
-                            <form action="#" method="post" id="add-fav">
+                            <form action="/home" method="post" id="favorite">
                                 <div class="item col-md-4 col-sm-4">
                                   <a style="text-decoration:none" href="/group/<%= val2.name+" "+val2.department %>">
                                     <div class="thumbnail">
@@ -78,6 +78,8 @@
                                                 </div>
 
                                                 <div class="col-xs-12 col-md-6">
+                                                  <input type="hidden" name="id" id="id" value="<%= val2._id %>">
+                                                  <input type="hidden" name="groupName" id="groupName" value="<%= val2.name %>">
                                                     <button class="btn add-fav">
                                                         Join Group
                                                     </button>
@@ -102,5 +104,8 @@
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+<script src="/socket.io/socket.io.js"></script>
+<script src="/js/group/sendrequest.js"></script>
+<script src="/js/home.js"></script>
 </body>
 </html>
