@@ -3,7 +3,7 @@ module.exports = function (io, Users) {
   const users = new Users();
 
   io.on('connection', (socket) => {
-    console.log("User Connected");
+    //console.log("User Connected");
 
     socket.on('join',(params,callback)=>{
       socket.join(params.room);

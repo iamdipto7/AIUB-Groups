@@ -1,10 +1,12 @@
 'use strict';
 
-module.exports = function (Users, async) {
+module.exports = function (Users, async, Logout) {
   return {
     SetRouting: function (router) {
       router.get('/group/:name',this.groupPage);
       router.post('/group/:name', this.groupPostPage);
+
+      router.get('/logout',Logout.logout);
     },
 
     groupPage: function (req,res) {

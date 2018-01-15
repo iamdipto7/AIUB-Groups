@@ -11,11 +11,12 @@ const flash = require('connect-flash');
 const passport = require('passport');
 const socketIO = require('socket.io');
 const {Users} = require('./helpers/UsersClass');
+const {Global} = require('./helpers/Global');
 
 const container = require('./container');
 
 
-container.resolve(function(users,_,admin,home,group){
+container.resolve(function(users,_,admin,home,group, results, privatechat){
 
   mongoose.Promise = global.Promise;
   //mongoose.connect('mongodb://localhost/footballkik',{useMongoClient: true});
@@ -35,12 +36,15 @@ container.resolve(function(users,_,admin,home,group){
 
     require('./socket/groupchat.js')(io, Users);
     require('./socket/friend.js')(io);
+    require('./socket/globalroom.js')(io, Global, _);
 
     const router = require('express-promise-router')();
     users.SetRouting(router);
     admin.SetRouting(router);
     home.SetRouting(router);
     group.SetRouting(router);
+    results.SetRouting(router);
+    privatechat.SetRouting(router);
 
     app.use(router);
   };

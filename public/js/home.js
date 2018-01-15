@@ -5,6 +5,9 @@ $(document).ready(function() {
     var id = $('#id').val();
     var groupName = $('#groupName').val();
 
+    console.log(id);
+    console.log(groupName);
+
     $.ajax({
       url: '/home',
       type: 'POST',
