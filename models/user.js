@@ -10,7 +10,19 @@ const userSchema = mongoose.Schema({
   facebook: {type:String,default:''},
   fbTokens: Array,
   google: {type:String, default: ''},
-  googleTokens: Array
+  googleTokens: Array,
+  sentRequest: [{
+    username: {type: String, default: ''}
+  }],
+  request: [{
+    userId: {type: mongoose.Schema.Types.ObjectId, ref: 'User'},
+    username: {type: String, default: ''}
+  }],
+  friendsList: [{
+    friendId: {type: mongoose.Schema.Types.ObjectId, ref: 'User'},
+    friendName: {type: String, default: ''}
+  }],
+  totalRequest: {type:Number, default:0}
 });
 
 userSchema.methods.encryptPassword = function (password) {

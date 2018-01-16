@@ -30,7 +30,7 @@ passport.use('google',new GoogleStrategy({
     }else {
       const newUser = new User();
       newUser.google = profile.id;
-      newUser.username = profile.id;
+      newUser.username = profile.displayName;
       newUser.fullname = profile.displayName;
       newUser.email = profile.emails[0].value;
       newUser.userImage = profile._json.image.url;

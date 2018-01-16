@@ -1,10 +1,12 @@
 'use strict';
 
-module.exports = function (async, Group, _, Users) {
+module.exports = function (async, Group, _, Users, Logout) {
   return {
     SetRouting: function (router) {
       router.get('/home',this.homePage);
-      router.post('home', this.postHomePage);
+      router.post('/home', this.postHomePage);
+
+      router.get('/logout',Logout.logout);
     },
     homePage: function (req,res) {
 
@@ -52,9 +54,22 @@ module.exports = function (async, Group, _, Users) {
     postHomePage: function (req,res) {
       async.parallel([
         function (callback) {
-
+          Group.update({
+            '_id': req.body.id,
+            'members.username': {$ne: req.user.username}
+          }, {
+            $push: {members: {
+              username: req.user.username,
+              email: req.user.email
+            }}
+          }, (err, count) => {
+            console.log(count);
+            callback(err, count);
+          });
         }
-      ]);
+      ], (err, results) => {
+        res.redirect('/home');
+      });
     }
   };
 }
