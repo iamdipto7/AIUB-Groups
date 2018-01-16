@@ -15,6 +15,10 @@ $(document).ready(function () {
       room2: paramTwo
     }
     socket.emit('join PM', params);
+
+    socket.on('message display', function () {
+      $('#reload').load(location.href + ' #reload');
+    });
   });
 
   socket.on('new message', function (data) {

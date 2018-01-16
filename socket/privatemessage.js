@@ -10,6 +10,8 @@ module.exports = function (io) {
         text: message.text,
         sender: message.from
       });
+
+      io.emit('message display', {});
       callback();
     });
   });
