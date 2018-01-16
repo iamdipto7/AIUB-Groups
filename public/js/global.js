@@ -22,7 +22,7 @@ $(document).ready(function () {
     var friend = friends.split('@');
 
 
-    var name = $('#name-user').val();
+    var name = $('#name-user').val().toLowerCase();
 
     var ol = $('<div></div>');
     var arr = [];
@@ -38,8 +38,8 @@ $(document).ready(function () {
         //console.log("baal");
         arr.push(users[i]);
 
-        var userName = users[i].name;
-        var list = '<img src="https://placehold.it/300x300" class="pull-left img-circle" style="width:40px; margin-right:10px;" /><p><a id="val" href="/chat/'+userName+'.'+name+'"><h3 style="padding-top:15px; color:gray; font-size:14px;">'+'@'+users[i].name+'<span class="fa fa-circle online_friend"></span></h3></a></p><hr>';
+        var userName = users[i].name.toLowerCase();
+        var list = '<img src="https://placehold.it/300x300" class="pull-left img-circle" style="width:40px; margin-right:10px;" /><p><a id="val" href="/chat/'+userName.replace(/ /g, "-")+'.'+name.replace(/ /g, "-")+'"><h3 style="padding-top:15px; color:gray; font-size:14px;">'+'@'+users[i].name+'<span class="fa fa-circle online_friend"></span></h3></a></p><hr>';
         ol.append(list);
       }
     }
