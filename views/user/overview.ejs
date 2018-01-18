@@ -51,13 +51,13 @@
 
                                     <div class="profile-usermenu">
                                         <ul class="nav">
-                                            <li>
+                                            <li class="active">
                                                 <a href="/profile/<%= user.username %>" style="color:#4aa1f3 !important">
                                                     <i class="fa fa-home" style="color:#4aa1f3 !important"></i>
                                                     Overview
                                                 </a>
                                             </li>
-                                            <li class="active">
+                                            <li>
                                                 <a href="/settings/profile" style="color:#4aa1f3 !important">
                                                     <i class="fa fa-user" style="color:#4aa1f3 !important"></i>
                                                     Profile
@@ -82,67 +82,25 @@
 
 
                     <!--MIDDLE-->
-                    <div class="col-sm-5 col-md-6 mob-50">
+                    <div class="col-sm-8 col-md-9 mob-50">
+                      <span id="error"></span>
+                      <form method="post">
+                      <div>
+                        <div class="user-display">
 
-                        <div class="profile-signup">
+                          <h3 class="user-display-head" style="color:#4aa1f3 !important">Favourite Groups</h3>
+                          <hr />
+                          <% _.forEach(user.favGroup, function(val){ %>
+                          <p style="margin-bottom:30px; color:#4aa1f3 ">
+                            <span class="glyphicon glyphicon-check" style="color:gray"></span>
+                            <%= val.groupName %>
+                          </p>
+                          <% }) %>
 
-                          <span id="error" class="text-center"></span>
-
-                            <form class="form" role="form" method="POST" id="form" action="#">
-
-                                <h3 style="margin-top:0px; color:#4aa1f3 !important">Personal Information</h3>
-                                <hr />
-                                <div class="row">
-                                    <div class="col-md-12">
-                                        <input id="username" class="form-control input-lg" name="username" type="text" placeholder="username" value="<%= user.username %>">
-                                    </div>
-                                    <div class="col-md-12">
-                                        <input id="fullname" class="form-control input-lg" name="fullname" type="text" placeholder="Fullname" value="<%= user.fullname %>">
-                                    </div>
-                                    <div class="col-md-12">
-                                        <input id="city" class="form-control input-lg" name="city" type="text" placeholder="City" value="<%= user.city %>">
-                                    </div>
-
-                                </div>
-                                <label style="color:#4aa1f3 !important">Gender : </label>
-                                <label style="color:#4aa1f3 !important; margin-right:10px;"></label>
-                                <% if(user.gender !== '') { %>
-                                  <label class="radio-inline">
-                                    <input type="radio" name="gender" value="<%= user.gender %>" id="gender" checked />
-                                    <%= user.gender %>
-                                  </label><br>
-                                <% } %>
-                                <label class="radio-inline">
-                                    <input type="radio" name="gender" value="Male" id="gender" />
-                                    Male
-                                </label>
-                                <label class="radio-inline">
-                                    <input type="radio" name="gender" value="Female" id="gender" />
-                                    Female
-                                </label>
-
-
-                                <div class="" style="margin-top:20px">
-                                <label style="color:#4aa1f3 !important">Mantra</label><br>
-                                    <textarea name="mantra" id="mantra" class="form-control input-lg" rows="5" placeholder="A one liner sentence"><%= user.mantra %></textarea>
-                                </div>
-
-
-
-                                <div>
-                                    <label style="color:#4aa1f3 !important">Add Profile Photo</label><br>
-                                    <input type="hidden" id="user-image" name="user-image" value="<%= user.userImage %>">
-                                    <button class="btn btn-lg add-btn" style="background-color:#4aa1f3 !important; color:white" type="button">Add Profile Image</button>
-                                    <input type="file" class="form-control" name="upload" id="add-input" style="display: none">
-                                    <span id="completed"></span>
-                                </div>
-
-                                <input type="submit" id="profile" value="SAVE PROFILE" class="btn btn-lg btn-default btn-block save-profile-btn" name="submit" style="background-color:#4aa1f3 !important; color:white !important">
-
-                            </form>
 
                         </div>
-
+                      </div>
+                      </form>
                     </div>
 
 
@@ -158,7 +116,7 @@
   <script src="/socket.io/socket.io.js"></script>
   <script src="/js/messageLink.js"></script>
   <script src="/js/group/sendrequest.js"></script>
-  <script src="/js/user/profile.js"></script>
+  <script src="/js/user/interests.js"></script>
   <script src="/js/home.js"></script>
   <script src="/js/global.js"></script>
   <script src="/js/deparam.js" charset="utf-8"></script>

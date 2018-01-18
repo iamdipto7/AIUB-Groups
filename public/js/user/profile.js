@@ -42,7 +42,7 @@ $(document).ready(function () {
 
     if (username == '' || fullname == '' || city == '' || gender == '' || mantra == '') {
       valid = false;
-      $('#error').html('<div class="alert alert-danger">You can not submit an emty field!</div>')
+      $('#error').html('<div class="alert alert-danger">You can not submit an emty field!</div>');
     } else {
       userImage = $('#add-input').val();
       $('#error').html('');
