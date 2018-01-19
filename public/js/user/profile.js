@@ -53,7 +53,6 @@ $(document).ready(function () {
           url: '/settings/profile',
           type: 'POST',
           data: {
-            username: username,
             fullname: fullname,
             gender: gender,
             city: city,

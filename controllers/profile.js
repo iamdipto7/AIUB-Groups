@@ -83,7 +83,6 @@ module.exports = function (async, Users, Message, formidable, FriendResult) {
             Users.update({
               '_id': req.user._id
             }, {
-              username: req.body.username,
               fullname: req.body.fullname,
               mantra: req.body.mantra,
               gender: req.body.gender,
@@ -98,7 +97,6 @@ module.exports = function (async, Users, Message, formidable, FriendResult) {
             Users.update({
               '_id': req.user._id
             }, {
-              username: req.body.username,
               fullname: req.body.fullname,
               mantra: req.body.mantra,
               gender: req.body.gender,
