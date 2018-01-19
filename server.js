@@ -21,8 +21,6 @@ const container = require('./container');
 container.resolve(function(users,_,admin,home,group, results, privatechat, profile, interests){
 
   mongoose.Promise = global.Promise;
-  //mongoose.connect('mongodb://localhost/footballkik',{useMongoClient: true});
-  //mongoose.connect('mongodb://dipto:aiubgroups7@ds263137.mlab.com:63137/aiub-groups');
 
   mongoose.connect(process.env.MONGODB_URI);
 
