@@ -12,15 +12,19 @@ const passport = require('passport');
 const socketIO = require('socket.io');
 const {Users} = require('./helpers/UsersClass');
 const {Global} = require('./helpers/Global');
+const compression = require('compression');
+const helmet = require('helmet');
 
 const container = require('./container');
 
 
-container.resolve(function(users,_,admin,home,group, results, privatechat){
+container.resolve(function(users,_,admin,home,group, results, privatechat, profile, interests){
 
   mongoose.Promise = global.Promise;
   //mongoose.connect('mongodb://localhost/footballkik',{useMongoClient: true});
-  mongoose.connect('mongodb://localhost/aiub-groups');
+  //mongoose.connect('mongodb://dipto:aiubgroups7@ds263137.mlab.com:63137/aiub-groups');
+
+  mongoose.connect(process.env.MONGODB_URI);
 
   const app = SetupExpress();
 
@@ -28,7 +32,7 @@ container.resolve(function(users,_,admin,home,group, results, privatechat){
     const app = express();
     const server = http.createServer(app);
     const io = socketIO(server);
-    server.listen(3000,()=>{
+    server.listen(process.env.PORT || 3000,()=>{
       console.log('Listening to port 3000');
     });
 
@@ -46,13 +50,22 @@ container.resolve(function(users,_,admin,home,group, results, privatechat){
     group.SetRouting(router);
     results.SetRouting(router);
     privatechat.SetRouting(router);
+    profile.SetRouting(router);
+    interests.SetRouting(router);
 
     app.use(router);
+
+    app.use(function (req, res) {
+      res.render('404');
+    });
   };
 
 
 
   function ConfigureExpress(app){
+
+    app.use(compression());
+    app.use(helmet());
 
     require('./passport/passport-local');
     require('./passport/passport-facebook');
@@ -66,7 +79,7 @@ container.resolve(function(users,_,admin,home,group, results, privatechat){
 
     app.use(validator());
     app.use(session({
-      secret: 'this is a secret key',
+      secret: process.env.SECRET_KEY,
       resave: true,
       saveUninitialized: false,
       store: new MongoStore({mongooseConnection: mongoose.connection})

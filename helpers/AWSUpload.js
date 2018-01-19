@@ -10,6 +10,12 @@ AWS.config.update({
   region: 'ap-south-1'
 });
 
+// AWS.config.update({
+//   accessKeyId: process.env.AWS_ACCESSKEYID,
+//   secretAccessKey: process.env.SECRET_ACCESS_KEY,
+//   region: process.env.AWS_REGION
+// });
+
 const s0 = new AWS.S3({});
 const upload = multer({
   storage: multerS3({

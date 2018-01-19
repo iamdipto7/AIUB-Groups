@@ -4,7 +4,7 @@ $(document).ready(function(){
   var room = $('#groupName').val();
   var sender = $('#sender').val();
 
-  socket.on('connect', () => {
+  socket.on('connect', function() {
     var params = {
       sender:sender
     }

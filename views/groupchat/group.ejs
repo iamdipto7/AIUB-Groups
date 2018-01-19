@@ -37,7 +37,7 @@
 
                                             </div>
                                             <div class="user cover-img">
-                                                <img src="https://placehold.it/300x300" class="img-circle" alt="">
+                                                <img src="/uploads/<%= user.userImage %>" class="img-circle" alt="">
                                             </div>
                                             <div class="content">
                                                 <div class="main">
@@ -47,12 +47,12 @@
                                                         Online
                                                     </p>
                                                     <p class="text-center">
-                                                    	Mantra
+                                                    	<%= user.mantra %>
                                                     </p>
                                                 </div>
                                                 <div class="footer">
                                                     <i class="fa fa-mail-forward"></i>
-                                                    <a href="#">
+                                                    <a href="/profile/<%= user.username %>" style="text-decoration: none; color: #4aa1f3">
                                                       View My Profile
                                                     </a>
                                                 </div>
@@ -112,21 +112,25 @@
 
                             <div class="chat_area">
                               <ul id="messages" class="list-unstyled">
-                                <!-- <li class="left">
+                                <% _.forEach(groupMsg, function(val){ %>
+                                <% if(groupName === val.name){ %>
+                                <li class="left">
                                   <span class="chat-img1 pull-left">
-                                    <img class="img-circle" src="http://placehold.it/300x300" alt="">
+                                    <img class="img-circle" src="/uploads/<%= val.sender.userImage %>" alt="">
                                   </span>
                                   <div class="chat-body1">
-                                    <span class="chat-name">Username</span>
+                                    <span class="chat-name"><%= val.sender.username %></span>
                                     <br>
-                                    Message Body
+                                    <%= val.body %>
                                   </div>
-                                </li> -->
+                                </li>
+                                <% } %>
+                                <% }) %>
                               </ul>
                               <script type="text/template" id="message-template">
                                 <li class="left">
                                   <span class="chat-img1 pull-left">
-                                    <img class="img-circle" src="http://placehold.it/300x300" alt="">
+                                    <img class="img-circle" src="/uploads/{{userImage}}" alt="">
                                   </span>
                                   <div class="chat-body1">
                                     <span class="chat-name">{{sender}}</span>
@@ -139,7 +143,7 @@
 
                             <div class="message_write">
                               <form id="message-form" method="post">
-                                  <input type="hidden" id="groupName" name="" value="<%= groupName %>">
+                                  <input type="hidden" id="groupName" name="groupName" value="<%= groupName %>">
                                   <input type="hidden" name="sender" id="sender" value="<%= user.username %>">
 
                                   <input type="text" class="form-control" name="message" id="msg" placeholder="Type a message">
@@ -218,9 +222,11 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
 <script src="/socket.io/socket.io.js"></script>
+<script src="/js/messageLink.js"></script>
 <script src="/js/group/groupchat.js"></script>
 <script src="/js/group/sendrequest.js"></script>
 <script src="/js/global.js"></script>
+<script src="/js/deparam.js" charset="utf-8"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/mustache.js/2.3.0/mustache.min.js"></script>
 
 </body>

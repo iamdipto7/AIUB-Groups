@@ -37,7 +37,7 @@
 
                                             </div>
                                             <div class="user cover-img">
-                                                <img src="https://placehold.it/300x300" class="img-circle" alt="">
+                                                <img src="/uploads/<%= user.userImage %>" class="img-circle" alt="">
                                             </div>
                                             <div class="content">
                                                 <div class="main">
@@ -47,12 +47,12 @@
                                                         Online
                                                     </p>
                                                     <p class="text-center">
-                                                    	Mantra
+                                                    	<%= user.mantra %>
                                                     </p>
                                                 </div>
                                                 <div class="footer">
                                                     <i class="fa fa-mail-forward"></i>
-                                                    <a href="#">
+                                                    <a href="/profile/<%= user.username %>" style="text-decoration: none; color: #4aa1f3">
                                                       View My Profile
                                                     </a>
                                                 </div>
@@ -110,16 +110,33 @@
 
                             <div class="chat_area">
                               <ul id="messages" class="list-unstyled">
-                                <!-- <li class="left">
+                                <% if(chats.length > 0){ %>
+                                <% _.forEach(chats, function(val){ %>
+                                <% if(name === val.receiver.username.toLowerCase()) { %>
+                                <li class="left">
                                   <span class="chat-img1 pull-left">
                                     <img class="img-circle" src="http://placehold.it/300x300" alt="">
                                   </span>
                                   <div class="chat-body1">
-                                    <span class="chat-name">Username</span>
+                                    <span class="chat-name"><%= val.senderName %></span>
                                     <br>
-                                    Message Body
+                                    <%= val.message %>
                                   </div>
-                                </li> -->
+                                </li>
+                                <% } else if(name === val.sender.username.toLowerCase()) { %>
+                                  <li class="left">
+                                    <span class="chat-img1 pull-left">
+                                      <img class="img-circle" src="http://placehold.it/300x300" alt="">
+                                    </span>
+                                    <div class="chat-body1">
+                                      <span class="chat-name"><%= val.senderName %></span>
+                                      <br>
+                                      <%= val.message %>
+                                    </div>
+                                  </li>
+                                  <% } %>
+                                <% }) %>
+                                <% } %>
                               </ul>
                               <script type="text/template" id="message-template">
                                 <li class="left">
@@ -162,6 +179,7 @@
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
 <script src="/socket.io/socket.io.js"></script>
 <script src="/js/privatechat/pm.js"></script>
+<script src="/js/messageLink.js"></script>
 <script src="/js/group/sendrequest.js"></script>
 <script src="/js/global.js"></script>
 <script src="/js/deparam.js" charset="utf-8"></script>
