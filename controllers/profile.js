@@ -9,6 +9,7 @@ module.exports = function (async, Users, Message, formidable, FriendResult) {
       router.post('/settings/profile', this.postProfilePage);
 
       router.get('/profile/:name', this.overviewPage);
+      router.post('/profile/:name', this.overviewPostPage);
     },
 
     getProfilePage: function (req, res) {
@@ -47,7 +48,14 @@ module.exports = function (async, Users, Message, formidable, FriendResult) {
               }
             }
           ], (err, newResult) => {
-            callback(err, newResult);
+            const arr = [
+              {path: 'body.sender', model: 'User'},
+              {path: 'body.receiver', model: 'User'}
+            ];
+
+            Message.populate(newResult, arr, (err, newResult1) => {
+              callback(err, newResult1);
+            });
           });
         }
       ], (err, results) => {
@@ -132,7 +140,7 @@ module.exports = function (async, Users, Message, formidable, FriendResult) {
     overviewPage: function (req, res) {
       async.parallel([
         function (callback) {
-          Users.findOne({'username': req.user.username})
+          Users.findOne({'username': req.params.name})
               .populate('request.userId')
               .exec((err,result) => {
                 callback(err,result);
@@ -165,7 +173,14 @@ module.exports = function (async, Users, Message, formidable, FriendResult) {
               }
             }
           ], (err, newResult) => {
-            callback(err, newResult);
+            const arr = [
+              {path: 'body.sender', model: 'User'},
+              {path: 'body.receiver', model: 'User'}
+            ];
+
+            Message.populate(newResult, arr, (err, newResult1) => {
+              callback(err, newResult1);
+            });
           });
         }
       ], (err, results) => {
@@ -176,6 +191,10 @@ module.exports = function (async, Users, Message, formidable, FriendResult) {
         //console.log(res1.request[0].username);
         res.render('user/overview',{title:'AIUB Groups - Overview', user: req.user, data: res1, chat: res2});
       });
+    },
+
+    overviewPostPage: function (req, res) {
+      FriendResult.PostRequest(req, res, '/profile/'+req.params.name);
     }
   }
 }

@@ -37,38 +37,27 @@
                             <div class="col-md-12">
                                 <div class="profile-sidebar">
                                         <div class="img-container">
-                                            <img src="/uploads/<%= user.userImage %>" class="img-responsive img-user" id="show_img">
+                                            <img src="/uploads/<%= data.userImage %>" class="img-responsive img-user" id="show_img">
                                         </div>
 
                                     <div class="profile-usertitle">
                                         <div class="profile-usertitle-name">
-                                            <%= user.fullname %>
+                                            <%= data.fullname %>
                                         </div>
                                         <div class="profile-usertitle-job">
-                                            @<%= user.username %>
+                                            @<%= data.username %>
                                         </div>
                                     </div>
 
                                     <div class="profile-usermenu">
                                         <ul class="nav">
                                             <li class="active">
-                                                <a href="/profile/<%= user.username %>" style="color:#4aa1f3 !important">
+                                                <a href="/profile/<%= data.username %>" style="color:#4aa1f3 !important">
                                                     <i class="fa fa-home" style="color:#4aa1f3 !important"></i>
                                                     Overview
                                                 </a>
                                             </li>
-                                            <li>
-                                                <a href="/settings/profile" style="color:#4aa1f3 !important">
-                                                    <i class="fa fa-user" style="color:#4aa1f3 !important"></i>
-                                                    Profile
-                                                </a>
-                                            </li>
-                                            <li>
-                                                <a href="/settings/interests" style="color:#4aa1f3 !important">
-                                                    <i class="fa fa-check" style="color:#4aa1f3 !important"></i>
-                                                    Interests
-                                                </a>
-                                            </li>
+                                            
                                         </ul>
                                     </div>
 
@@ -90,7 +79,7 @@
 
                           <h3 class="user-display-head" style="color:#4aa1f3 !important">Favourite Groups</h3>
                           <hr />
-                          <% _.forEach(user.favGroup, function(val){ %>
+                          <% _.forEach(data.favGroup, function(val){ %>
                           <p style="margin-bottom:30px; color:#4aa1f3 ">
                             <span class="glyphicon glyphicon-check" style="color:gray"></span>
                             <%= val.groupName %>

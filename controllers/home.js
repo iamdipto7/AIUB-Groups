@@ -60,7 +60,14 @@ module.exports = function (async, Group, _, Users, Logout, Message, FriendResult
               }
             }
           ], (err, newResult) => {
-            callback(err, newResult);
+            const arr = [
+              {path: 'body.sender', model: 'User'},
+              {path: 'body.receiver', model: 'User'}
+            ];
+
+            Message.populate(newResult, arr, (err, newResult1) => {
+              callback(err, newResult1);
+            });
           });
         }
       ], (err,results) => {

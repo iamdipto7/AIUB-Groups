@@ -4,7 +4,9 @@ $(document).ready(function () {
   var room = $('#groupName').val();
   var sender = $('#sender').val();
 
-  socket.on('connect', () => {
+  var userPic = $('#name-image').val();
+
+  socket.on('connect', function() {
     console.log("Yeah user connected");
 
     var params = {
@@ -16,7 +18,7 @@ $(document).ready(function () {
     })
   });
 
-  socket.on('usersList', (users) => {
+  socket.on('usersList', function(users) {
     var ol = $('<ol></ol>');
     for (let i = 0; i < users.length; i++) {
       ol.append('<p><a id="val" data-toggle="modal" data-target="#myModal">'+users[i]+'</a></p>');
@@ -32,11 +34,12 @@ $(document).ready(function () {
     $('#users').html(ol);
   });
 
-  socket.on('newMessage', (data) => {
+  socket.on('newMessage', function(data) {
     var template = $('#message-template').html();
     var message = Mustache.render(template, {
       text: data.text,
-      sender: data.from
+      sender: data.from,
+      userImage: data.image
     });
 
     $('#messages').append(message);
@@ -50,7 +53,8 @@ $(document).ready(function () {
     socket.emit('createMessage', {
       text: msg,
       room: room,
-      from: sender
+      from: sender,
+      userPic: userPic
     },function () {
       $('#msg').val('');
     });
